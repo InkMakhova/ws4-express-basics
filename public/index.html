@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub Search (Console Demo)</title>
+</head>
+<body>
+<h1>GitHub Search Console Demo</h1>
+<script>
+  const API_BASE = "https://your-render-service.onrender.com";
+
+  async function search(){
+    const params = new URLSearchParams(location.search);
+    const query = params.get('q');
+
+    if (!query) {
+      console.log("Add ?q=term to the URL to search, e.g. ?q=express");
+      return;
+    }
+
+    console.log('Searching...');
+    try {
+      const response = await fetch(API_BASE + "/api/search?q=" + encodeURIComponent(query));
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      console.log('Search results:', data);
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
+  }
+
+  search();
+</script>
+</body>
+</html>
